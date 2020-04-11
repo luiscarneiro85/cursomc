@@ -1,0 +1,24 @@
+package com.luiscarneiro.cursomc.services;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.luiscarneiro.cursomc.domain.Cliente;
+import com.luiscarneiro.cursomc.repositories.ClienteRepository;
+import com.luiscarneiro.cursomc.services.exceptions.ObjectNotFoundException;
+
+@Service
+public class ClienteService {
+
+	@Autowired
+	private ClienteRepository repository;
+	
+	public Cliente buscar(Integer id) {
+		Optional<Cliente> obj = repository.findById(id);
+		
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
+	}
+}
